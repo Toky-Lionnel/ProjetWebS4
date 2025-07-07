@@ -1,3 +1,4 @@
+-- Active: 1751743068514@@127.0.0.1@3306@finance
 CREATE TABLE Etablissement_Financier (
     id INT AUTO_INCREMENT,
     nom_etablissement VARCHAR(50) NOT NULL,
@@ -23,6 +24,7 @@ CREATE TABLE Clients (
     email VARCHAR(50) NOT NULL UNIQUE,
     motdepasse VARCHAR(255) NOT NULL, -- Pour stocker un hash sécurisé
     revenu_mensuel DECIMAL(10,2) CHECK (revenu_mensuel >= 0),
+    date_naissance DATE,
     PRIMARY KEY(id)
 );
 
@@ -72,7 +74,7 @@ CREATE TABLE Mouvement_Argent (
     id_compte INT NOT NULL,
     id_type_mouvement INT NOT NULL,
     montant DECIMAL(15,2) NOT NULL,
-    date_paiement DATE NOT NULL,
+    date_paiement DATETIME NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(id_compte) REFERENCES Compte(id),
     FOREIGN KEY(id_type_mouvement) REFERENCES Type_Mouvement(id)
@@ -83,7 +85,7 @@ CREATE TABLE Transactions (
     id_mouvement_argent INT NOT NULL,
     id_ef INT NOT NULL,
     id_type_transaction INT NOT NULL,
-    date_transaction DATE NOT NULL,
+    date_transaction DATETIME NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(id_mouvement_argent) REFERENCES Mouvement_Argent(id),
     FOREIGN KEY(id_ef) REFERENCES Etablissement_Financier(id),
@@ -94,7 +96,7 @@ CREATE TABLE Historique_Statut_Pret (
     id INT AUTO_INCREMENT,
     id_pret INT NOT NULL,
     id_statut_pret INT NOT NULL,
-    date_statut DATE NOT NULL,
+    date_statut DATETIME NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(id_pret) REFERENCES Pret(id),
     FOREIGN KEY(id_statut_pret) REFERENCES Statut_Pret(id)
