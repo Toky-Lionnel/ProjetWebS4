@@ -13,6 +13,7 @@ CREATE TABLE Type_Pret (
     duree_max INT NOT NULL CHECK (duree_max > 0),
     montant_min DECIMAL(15,2) CHECK (montant_min >= 0),
     montant_max DECIMAL(15,2) NOT NULL CHECK (montant_max > montant_min),
+    remboursement_total INT, -- apres X mois 
     min_age INT CHECK (min_age >= 0),
     max_age INT CHECK (max_age >= min_age),
     PRIMARY KEY(id)
@@ -85,6 +86,7 @@ CREATE TABLE Transactions (
     id_mouvement_argent INT NOT NULL,
     id_ef INT NOT NULL,
     id_type_transaction INT NOT NULL,
+    description_transaction TEXT,
     date_transaction DATETIME NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(id_mouvement_argent) REFERENCES Mouvement_Argent(id),
